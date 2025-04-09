@@ -1,5 +1,6 @@
 ---
 title: "Lab 02 - Global plastic waste"
+author: "Yaoxing Qian"
 output: 
   tufte::tufte_html:
     tufte_variant: "envisioned"
@@ -8,8 +9,8 @@ output:
 link-citations: true
 ---
 
-```{r include = FALSE}
-knitr::opts_chunk$set(eval = FALSE)
+```{r include = TRUE}
+knitr::opts_chunk$set(eval = TRUE)
 ```
 
 Plastic pollution is a major and growing problem, negatively affecting oceans and wildlife health.
@@ -83,6 +84,8 @@ The variable descriptions are as follows:
 
 -   Have a quick look at the data and notice that there are cells taking the value `NA` -- what does this mean?
 
+The NA we see in the data should mean "missing value"
+
 # Exercises
 
 Let's start by taking a look at the distribution of plastic waste per capita in 2010.
@@ -91,6 +94,26 @@ Let's start by taking a look at the distribution of plastic waste per capita in 
 ggplot(data = plastic_waste, aes(x = plastic_waste_per_cap)) +
   geom_histogram(binwidth = 0.2)
 ```
+```{r}
+ggplot(data = plastic_waste %>% filter(!is.na(plastic_waste_per_cap)),
+       aes(x = plastic_waste_per_cap)) +
+  geom_histogram(binwidth = 0.2, na.rm = TRUE) +
+  facet_wrap(~ continent)
+```
+
+1. Africa - I observed that in the histogram of Africa, there are two bars, one high and one low, but they are mainly concentrated in the range of about 17, indicating that the per capita value of plastic waste in most countries is concentrated at this level. The other high line shows that the values of a few countries are relatively high, forming a slight right-skewed trend.
+
+2. Asia - The Asia section shows that there are three groups of bars that are all concentrated at about 5, indicating that quite a few countries have low plastic waste per capita. However, there are two groups that have risen to that level, which I think may indicate that some countries have significantly higher than average levels.
+
+3. Europe - There are three groups of bars in the European chart, each at about 3 levels, and then the first group continues to rise to 7, and the second group rises to 26. This shows that there are large differences in the per capita plastic waste among countries in Europe: some countries have very low values, while others are abnormally high.
+
+4. North America - North America shows that initially, the four bars are all around 3, indicating that the data of most countries are relatively similar. Later, the bar chart values increased, with the fourth group reaching 4, and one of the other two groups increased to 5, and the other group increased to 25, showing that there are obvious outliers in North America.
+
+5. Oceania - Oceania has only two bars, one rising to about 21, and the other remaining at a lower level of about 1.
+I think this shows that the data for Oceania is relatively scarce, and the values vary greatly, which may be caused by the small number of samples.
+
+6. South America - South America also has only two bar charts, and there are also two extremes: extremely low and high.
+
 
 One country stands out as an unusual observation at the top of the distribution.
 One way of identifying this country is to filter the data for countries where plastic waste per capita is greater than 3.5 kg/person.
@@ -100,10 +123,15 @@ plastic_waste %>%
   filter(plastic_waste_per_cap > 3.5)
 ```
 
+
 Did you expect this result?
 You might consider doing some research on Trinidad and Tobago to see why plastic waste per capita is so high there, or whether this is a data error.
 
+I didn’t expect such a high value. I thought most countries have a significantly lower per capita plastic waste of less than 3.6 kg/person, and Trinidad and Tobago’s data is particularly abnormal.
+
 1.  Plot, using histograms, the distribution of plastic waste per capita faceted by continent. What can you say about how the continents compare to each other in terms of their plastic waste per capita?
+
+African countries tend to have higher per capita plastic waste, while Asia and Europe have relatively lower levels.
 
 ```{marginfigure}
 **NOTE:** From this point onwards the plots and the output of the code are not displayed in the lab instructions, but you can and should the code and view the results yourself.
@@ -145,14 +173,18 @@ ggplot(data = plastic_waste,
        mapping = aes(x = plastic_waste_per_cap, 
                      color = continent, 
                      fill = continent)) +
-  geom_density(alpha = 0.7)
+  geom_density(alpha = 0.1)
 ```
+With alpha=0.7, the curves are less transparent and the overlap is harder to discern. With alpha=0.4, the curves for each continent become more transparent and the overlap is better visible.
+
 
 This still doesn't look great...
 
 1.  Recreate the density plots above using a different (lower) alpha level that works better for displaying the density curves for all continents.
 
 2.  Describe why we defined the `color` and `fill` of the curves by mapping aesthetics of the plot but we defined the `alpha` level as a characteristic of the plotting geom.
+
+Color and fill are used to automatically assign different colors to different groups (such as different continents) based on the data, while transparency is only used to adjust the display effect of the graphic and does not need to change according to the data.
 
 🧶 ✅ ⬆️ *Now is a good time to knit your document and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
