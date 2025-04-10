@@ -284,6 +284,7 @@ plastic_waste %>%
          subtitle = "by continent") +
     theme_minimal()
 ```
+As can be seen from the figure, the points of most continents are roughly concentrated below the smooth curve (black), indicating that in these regions, the per capita value of plastic waste in most countries is relatively low and below the overall trend line. The situation in Oceania and South America is special. Their points are more scattered, with about half located above the smooth curve and half located below, indicating that there may be large differences within these two regions, and the per capita value of plastic waste in some countries is significantly higher.
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
 
