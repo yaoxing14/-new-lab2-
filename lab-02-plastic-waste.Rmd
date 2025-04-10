@@ -194,10 +194,24 @@ And yet another way to visualize this relationship is using side-by-side box plo
 ggplot(data = plastic_waste, 
        mapping = aes(x = continent, 
                      y = plastic_waste_per_cap)) +
-  geom_boxplot()
+   geom_violin()
 ```
 
 1.  Convert your side-by-side box plots from the previous task to [violin plots](http://ggplot2.tidyverse.org/reference/geom_violin.html). What do the violin plots reveal that box plots do not? What features are apparent in the box plots but not in the violin plots?
+
+The violin plot shows the complete density distribution of the data, while the box plot shows the median, quartiles, and outliers of the data very intuitively.
+
+Africa: The violin plot is shorter and flatter, indicating that the per capita data of plastic waste in most countries in the continent are relatively concentrated, with a small range of variation.
+
+Asia: The violin plot looks like a bell, with an overall bell-shaped distribution, and a "thread head"-like part at the top extending to about 0.75, which may suggest that the data of a few countries are slightly higher, but the overall distribution is relatively smooth.
+
+Europe: The violin plot is small and concentrated, indicating that the values of most European countries are relatively consistent and the distribution range is narrow.
+
+North America: The violin plot is also relatively concentrated, but there is a special phenomenon: there is an obvious black vertical line at the top, which rises straight to 3.5, indicating that there may be one or a few extreme values in North America, which is a feature not found in other continents.
+
+Oceania: The violin plot shows that the data distribution is relatively concentrated, without an obvious protruding top.
+
+South America: The violin plot is similar to Africa, with a concentrated overall distribution, but a slightly smaller volume, which means that the overall range of variation in the data may be slightly narrower than that of Africa.
 
 ```{marginfigure}
 **Remember:** We use `geom_point()` to make scatterplots.
@@ -205,13 +219,39 @@ ggplot(data = plastic_waste,
 
 1.  Visualize the relationship between plastic waste per capita and mismanaged plastic waste per capita using a scatterplot.
     Describe the relationship.
+```{r}
+ggplot(data = plastic_waste, 
+       aes(x = plastic_waste_per_cap, y = mismanaged_plastic_waste_per_cap)) +
+  geom_point()
+```
+The scatter plot shows that the per capita values of plastic waste in most countries are concentrated between 0 and 0.50, while the corresponding per capita values of mishandled plastic waste are mainly concentrated between 0 and 0.01. This shows that the values of these two indicators are very low overall and the data variation range is small. This situation shows that the values of most countries in this regard are very close.
 
 2.  Colour the points in the scatterplot by continent.
     Does there seem to be any clear distinctions between continents with respect to how plastic waste per capita and mismanaged plastic waste per capita are associated?
+    
+```{r}
+ggplot(data = plastic_waste, 
+       aes(x = plastic_waste_per_cap, y = mismanaged_plastic_waste_per_cap, color = continent)) +
+  geom_point()
+```
+I don't think there is any difference, and the values of most countries in this regard are very close.
 
 3.  Visualize the relationship between plastic waste per capita and total population as well as plastic waste per capita and coastal population.
     You will need to make two separate plots.
     Do either of these pairs of variables appear to be more strongly linearly associated?
+    
+```{r}
+ggplot(data = plastic_waste, 
+       aes(x = total_pop, y = plastic_waste_per_cap)) +
+  geom_point()
+```
+
+```{r}
+ggplot(data = plastic_waste, 
+       aes(x = coastal_pop, y = plastic_waste_per_cap)) +
+  geom_point()
+```
+From the two scatter plots, the points of both sets of data are concentrated in the lower left corner, indicating that the per capita value of plastic waste, total population and coastal population in most countries are at a low level. However, in terms of the relationship with the coastal population, the points are more distributed along a straight line, suggesting that there is a strong linear relationship between per capita plastic waste and coastal population.
 
 🧶 ✅ ⬆️ *Now is another good time to knit your document and commit and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
